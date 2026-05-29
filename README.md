@@ -194,7 +194,7 @@ Ask brief clarifying questions one at a time:
    - **API app**: expose scope `api://<api-appId>/access`; add **delegated permission** `https://database.windows.net/user_impersonation`; grant admin consent; create a **client secret** (capture as `ENTRA_API_CLIENT_SECRET`).
    - **SPA app**: redirect URI for web FQDN; delegated permission on the API scope; admin consent.
    Write `ENTRA_TENANT_ID`, `ENTRA_AUDIENCE`, `ENTRA_ISSUER`, `ENTRA_API_CLIENT_ID`, `SPA_CLIENT_ID`, `API_SCOPE` to `.env`; write `ENTRA_API_CLIENT_SECRET` to `.env` **only**, and never to source.
-3. **DAB** — `data-api/dab-config.json` and `data-api/Dockerfile` pinned to DAB image `2.0.0-rc` or later because OBO requires DAB 2.0+. Configure:
+3. **DAB** — `data-api/dab-config.json` and `data-api/Dockerfile` use the GA DAB image `mcr.microsoft.com/azure-databases/data-api-builder:latest` because OBO requires DAB 2.0+. Configure:
    - `authentication.provider: EntraId` with the audience/issuer.
    - **OBO** settings using the API app's client ID + tenant + client secret (per current DAB OBO docs).
    - `data-source` connection string is **bare**: `Server=tcp:<sqlserver>.database.windows.net,1433;Database=<db>;Encrypt=True;TrustServerCertificate=False;` — **no `User ID`, no `Password`, no `Authentication=...`**. DAB will acquire a user-delegated Azure SQL token via OBO and use it on the connection.
